@@ -1,4 +1,4 @@
-# mediumclone
+# Test Vue Project
 
 ## Project setup
 ```
