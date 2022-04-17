@@ -15,6 +15,8 @@
 
               <fieldset class='form-group'>
                 <input
+                  v-model='username'
+                  name='username'
                   class='form-control form-control-lg ng-pristine ng-untouched ng-valid ng-empty'
                   type='text'
                   placeholder='Username'>
@@ -22,6 +24,8 @@
 
               <fieldset class='form-group'>
                 <input
+                  v-model='email'
+                  name='email'
                   class='form-control form-control-lg ng-pristine ng-untouched ng-valid ng-empty ng-valid-email'
                   type='email'
                   placeholder='Email'>
@@ -29,12 +33,15 @@
 
               <fieldset class='form-group'>
                 <input
+                  v-model='password'
+                  name='password'
                   class='form-control form-control-lg ng-pristine ng-untouched ng-valid ng-empty'
                   type='password'
                   placeholder='Password'>
               </fieldset>
 
               <button
+                :disabled='isSubmitting'
                 class='btn btn-lg btn-primary pull-xs-right ng-binding'
                 type='submit'>
                 Sign up
@@ -51,8 +58,30 @@
 <script>
 export default {
   name: 'McvRegister',
+  data() {
+    return {
+      email: '',
+      username: '',
+      password: ''
+    }
+  },
+  computed: {
+    isSubmitting() {
+      return this.$store.state.auth.isSubmitting
+    }
+  },
   methods: {
-    onSubmit: console.log
+    onSubmit() {
+      this.$store
+        .dispatch('register', {
+          email: this.email,
+          username: this.username,
+          password: this.password
+        })
+        .then(() => {
+          this.$router.push({name: 'home'})
+        })
+    }
   }
 }
 </script>
