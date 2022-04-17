@@ -3,9 +3,9 @@
     <div class='container page'>
       <div class='row'>
         <div class='col-md-6 offset-md-3 col-xs12'>
-          <h1 class='text-xs-center'>Sign Up</h1>
+          <h1 class='text-xs-center'>Sign In</h1>
           <p class='text-xs-center'>
-            <router-link :to="{name: 'login'}">Have an account?</router-link>
+            <router-link :to="{name: 'register'}">Need an account?</router-link>
           </p>
 
           <mcv-validation-errors
@@ -14,15 +14,6 @@
 
           <form @submit.prevent='onSubmit'>
             <fieldset>
-
-              <fieldset class='form-group'>
-                <input
-                  v-model='username'
-                  name='username'
-                  class='form-control form-control-lg ng-pristine ng-untouched ng-valid ng-empty'
-                  type='text'
-                  placeholder='Username'>
-              </fieldset>
 
               <fieldset class='form-group'>
                 <input
@@ -46,7 +37,7 @@
                 :disabled='isSubmitting'
                 class='btn btn-lg btn-primary pull-xs-right ng-binding'
                 type='submit'>
-                Sign up
+                Sign in
               </button>
 
             </fieldset>
@@ -58,19 +49,18 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
 import McvValidationErrors from '@/components/ValidationErrors'
 import {actionTypes} from '@/store/modules/auth'
-import {mapState} from 'vuex'
 
 export default {
-  name: 'McvRegister',
+  name: 'McvLogin',
   components: {
     McvValidationErrors
   },
   data() {
     return {
       email: '',
-      username: '',
       password: ''
     }
   },
@@ -78,14 +68,13 @@ export default {
     ...mapState({
       isSubmitting: state => state.auth.isSubmitting,
       validationErrors: state => state.auth.validationErrors,
-    }),
+   }),
   },
   methods: {
     onSubmit() {
       this.$store
-        .dispatch(actionTypes.register, {
+        .dispatch(actionTypes.login, {
           email: this.email,
-          username: this.username,
           password: this.password
         })
         .then(() => {
