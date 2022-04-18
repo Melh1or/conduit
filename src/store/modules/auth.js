@@ -3,7 +3,7 @@ import {setItem} from '@/helpers/persistanceStorage'
 
 const state = {
   isSubmitting: false,
-  currentUer: null,
+  currentUser: null,
   validationErrors: null,
   isLoggedIn: null
 }
@@ -23,6 +23,24 @@ export const actionTypes = {
   login: '[auth] login'
 }
 
+export const gettersTypes = {
+  currentUser: '[auth] currentUser',
+  isLoggedIn: '[auth] isLoggedIn',
+  isAnonymous: '[auth] isAnonymous',
+}
+
+const getters = {
+  [gettersTypes.currentUser]: state => {
+    return state.currentUser
+  },
+  [gettersTypes.isLoggedIn]: state => {
+    return Boolean(state.isLoggedIn)
+  },
+  [gettersTypes.isAnonymous]: state => {
+    return state.isLoggedIn === false
+  },
+}
+
 const mutations = {
   [mutationTypes.registerStart](state) {
     state.isSubmitting = true
@@ -30,7 +48,7 @@ const mutations = {
   },
   [mutationTypes.registerSuccess](state, payload) {
     state.isSubmitting = false
-    state.currentUer = payload
+    state.currentUser = payload
     state.isLoggedIn = true
   },
   [mutationTypes.registerFailure](state, payload) {
@@ -44,7 +62,7 @@ const mutations = {
   },
   [mutationTypes.loginSuccess](state, payload) {
     state.isSubmitting = false
-    state.currentUer = payload
+    state.currentUser = payload
     state.isLoggedIn = true
   },
   [mutationTypes.loginFailure](state, payload) {
@@ -92,5 +110,6 @@ const actions = {
 export default {
   state,
   mutations,
-  actions
+  actions,
+  getters
 }

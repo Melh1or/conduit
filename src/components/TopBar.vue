@@ -26,13 +26,14 @@
           </li>
 
           <li class='nav-item'>
-            <router-link :to='{name: "home", params: {slug: currentUser.username}}' class='nav-link' active-class='active'>
+            <router-link :to='{name: "home", params: {slug: currentUser.username}}' class='nav-link'
+                         active-class='active'>
               <img class='user-pic' :src='currentUser.image' />&nbsp;{{ currentUser.username }}}
             </router-link>
           </li>
         </template>
 
-        <template v-if='!isLoggedIn'>
+        <template v-if='isAnonymous'>
           <li class='nav-item'>
             <router-link :to='{name: "login"}' class='nav-link' active-class='active'>
               Sign In
@@ -51,14 +52,16 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
+import {mapGetters} from 'vuex'
+import {gettersTypes} from '@/store/modules/auth'
 
 export default {
   name: 'McvTopBar',
   computed: {
-    ...mapState({
-      currentUser: state => state.auth.currentUser,
-      isLoggedIn: state => state.auth.isLoggedIn
+    ...mapGetters({
+      currentUser: gettersTypes.currentUser,
+      isLoggedIn: gettersTypes.isLoggedIn,
+      isAnonymous: gettersTypes.isAnonymous
     })
   }
 }
