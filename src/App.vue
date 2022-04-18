@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import {actionTypes} from '@/store/modules/auth'
 import McvTopBar from '@/components/TopBar'
 
 export default {
@@ -14,6 +15,9 @@ export default {
   components: {
     McvTopBar
   },
+  mounted() {
+    this.$store.dispatch(actionTypes.getCurrentUser)
+  }
 }
 </script>
 
