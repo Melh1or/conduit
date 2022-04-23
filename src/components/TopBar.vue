@@ -14,19 +14,19 @@
 
         <template v-if='isLoggedIn'>
           <li class='nav-item'>
-            <router-link :to='{name: "globalFeed"}' class='nav-link' active-class='active'>
+            <router-link :to='{name: "createArticle"}' class='nav-link' active-class='active'>
               <i class='ion-compose' />&nbsp;New Article
             </router-link>
           </li>
 
           <li class='nav-item'>
-            <router-link :to='{name: "globalFeed"}' class='nav-link' active-class='active'>
+            <router-link :to='{name: "settings"}' class='nav-link' active-class='active'>
               <i class='ion-gear-a' />&nbsp;Settings
             </router-link>
           </li>
 
           <li class='nav-item'>
-            <router-link :to='{name: "globalFeed", params: {slug: currentUser.username}}' class='nav-link' active-class='active'>
+            <router-link :to='{name: "userProfile", params: {slug: currentUser.username}}' class='nav-link' active-class='active'>
               <img class='user-pic' :src='currentUser.image' />&nbsp;{{ currentUser.username }}}
             </router-link>
           </li>
