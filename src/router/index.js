@@ -4,6 +4,7 @@ import GlobalFeed from '@/views/GlobalFeed'
 import Register from '@/views/Register'
 import Login from '@/views/Login'
 import YourFeed from '@/components/YourFeed'
+import TagFeed from '@/components/TagFeed'
 
 const routes = [
   {
@@ -29,7 +30,7 @@ const routes = [
   {
     path: '/tags/:slug',
     name: 'tags',
-    component: GlobalFeed
+    component: TagFeed
   },
   {
     path: '/articles/new',
