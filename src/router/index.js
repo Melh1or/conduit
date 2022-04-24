@@ -3,8 +3,8 @@ import {createRouter, createWebHistory} from 'vue-router'
 import GlobalFeed from '@/views/GlobalFeed'
 import Register from '@/views/Register'
 import Login from '@/views/Login'
-import YourFeed from '@/components/YourFeed'
-import TagFeed from '@/components/TagFeed'
+import YourFeed from '@/views/YourFeed'
+import TagFeed from '@/views/TagFeed'
 
 const routes = [
   {
