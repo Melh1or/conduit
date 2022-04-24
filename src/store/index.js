@@ -2,6 +2,7 @@ import {createStore} from 'vuex'
 
 import auth from '@/store/modules/auth'
 import feed from '@/store/modules/feed'
+import popularTags from '@/store/modules/popularTags'
 
  export default createStore({
   state: {},
@@ -10,6 +11,7 @@ import feed from '@/store/modules/feed'
   actions: {},
   modules: {
    auth,
-   feed
+   feed,
+   popularTags
   }
 })
