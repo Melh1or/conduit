@@ -68,6 +68,9 @@ export default {
   watch: {
     currentPage() {
       this.fetchFeed()
+    },
+    baseUrl() {
+      this.fetchFeed()
     }
   },
   computed: {

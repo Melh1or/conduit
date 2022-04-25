@@ -34,6 +34,7 @@ export default {
       return this.$route.params.slug
     },
     apiUrl() {
+      console.log('apiurl')
       return `/articles?tag=${this.tagName}`
     }
   }
