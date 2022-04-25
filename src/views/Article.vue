@@ -15,18 +15,23 @@
               {{ article.updatedAt }}
             </span>
           </div>
-          <router-link
-            :to='{name: "editArticle", params: {slug: article.slug}}'
-            class='btn btn-outline-secondary outline-sm'
-          >
-            <i class='ion-edit' />
-            Edit Article
-          </router-link>
-          <button class='btn btn-outline-danger btn-small'>
-            <i class='ion-trash-a'>
-              Delete article
-            </i>
-          </button>
+          <span v-if='isAuthor'>
+            <router-link
+              :to='{name: "editArticle", params: {slug: article.slug}}'
+              class='btn btn-outline-secondary outline-sm'
+            >
+              <i class='ion-edit' />
+              Edit Article
+            </router-link>
+            <button
+              @click='deleteArticle'
+              class='btn btn-outline-danger btn-small'
+            >
+              <i class='ion-trash-a'>
+                Delete article
+              </i>
+            </button>
+          </span>
         </div>
       </div>
     </div>
@@ -36,7 +41,7 @@
       <div class='row article-content' v-if='article'>
         <div class='col-xs-12'>
           <div>
-            <p class='article-body'>{{article.body}}</p>
+            <p class='article-body'>{{ article.body }}</p>
           </div>
         </div>
       </div>
@@ -45,8 +50,9 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
-import {actionTypes} from '@/store/modules/article'
+import {mapGetters, mapState} from 'vuex'
+import {actionTypes as articleActionTypes} from '@/store/modules/article'
+import {gettersTypes as authGettersTypes} from '@/store/modules/auth'
 import McvErrorMessage from '@/components/ErrorMessage'
 import McvLoading from '@/components/Loading'
 
@@ -57,14 +63,31 @@ export default {
     McvLoading
   },
   mounted() {
-    this.$store.dispatch(actionTypes.getArticle, {slug: this.$route.params.slug})
+    this.$store.dispatch(articleActionTypes.getArticle, {slug: this.$route.params.slug})
+  },
+  methods: {
+    deleteArticle() {
+      this.$store.dispatch(articleActionTypes.deleteArticle, {slug: this.$route.params.slug})
+        .then(() => {
+          this.$router.push({name: 'globalFeed'})
+        })
+    }
   },
   computed: {
-    ...mapState(({
+    ...mapState({
       isLoading: state => state.article.isLoading,
       error: state => state.article.error,
-      article: state => console.log(state.article.data) || state.article.data
-    }))
+      article: state => state.article.data
+    }),
+    ...mapGetters({
+      currentUser: authGettersTypes.currentUser
+    }),
+    isAuthor() {
+      if (!this.currentUser || !this.article) {
+        return false
+      }
+      return this.currentUser.username === this.article.author.username
+    }
   }
 }
 </script>
