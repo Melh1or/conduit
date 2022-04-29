@@ -1,14 +1,10 @@
 <template>
-
-
   <mcv-article-form
     :initial-values='initialValues'
     :errors='validationErrors'
     :is-submitting='isSubmitting'
     @articleSubmit='onSubmit'
   />
-
-
 </template>
 
 <script>
@@ -38,8 +34,8 @@ export default {
     }),
   },
   methods: {
-    onSubmit(inputArticle) {
-      this.$store.dispatch(actionTypes.createArticle, {inputArticle})
+    onSubmit(articleInput) {
+      this.$store.dispatch(actionTypes.createArticle, {articleInput})
         .then((article) => {
           this.$router.push({name: 'article', params: {slug: article.slug}})
         })

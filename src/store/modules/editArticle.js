@@ -1,0 +1,85 @@
+import articleApi from '@/api/article'
+
+const state = {
+  isLoading: false,
+  isSubmitting: false,
+  data: null,
+  validationErrors: null
+}
+
+export const mutationTypes = {
+  updateArticleStart: '[updateArticle] updateArticleStart',
+  updateArticleSuccess: '[updateArticle] updateArticleSuccess',
+  updateArticleFailure: '[updateArticle] updateArticleFailure',
+
+  getArticleStart: '[updateArticle] getArticleStart',
+  getArticleSuccess: '[updateArticle] getArticleSuccess',
+  getArticleFailure: '[updateArticle] getArticleFailure'
+}
+
+export const actionTypes = {
+  updateArticle: '[updateArticle] updateArticle',
+  getArticle: '[updateArticle] getArticle'
+}
+
+const mutations = {
+  [mutationTypes.updateArticleStart](state) {
+    state.isSubmitting = true
+  },
+  [mutationTypes.updateArticleSuccess](state) {
+    state.isSubmitting = false
+  },
+  [mutationTypes.updateArticleFailure](state, payload) {
+    state.isSubmitting = false
+    state.validationErrors = payload
+  },
+
+  [mutationTypes.getArticleStart](state) {
+    state.isLoading = true
+  },
+  [mutationTypes.getArticleSuccess](state, payload) {
+    state.isLoading = false
+    state.data = payload
+  },
+  [mutationTypes.getArticleFailure](state) {
+    state.isLoading = false
+  }
+}
+
+const actions = {
+  [actionTypes.updateArticle](context, {slug, articleInput}) {
+    return new Promise((resolve, reject) => {
+      context.commit(mutationTypes.updateArticleStart)
+      articleApi.updateArticle(slug, articleInput)
+        .then((article) => {
+          context.commit(mutationTypes.updateArticleSuccess, article)
+          resolve(article)
+        })
+        .catch((result) => {
+          context.commit(mutationTypes.updateArticleFailure, result.response.data.errors)
+          reject(result.response.data.errors)
+        })
+    })
+  },
+
+  [actionTypes.getArticle](context, {slug}) {
+    return new Promise((resolve, reject) => {
+      context.commit(mutationTypes.getArticleStart)
+      articleApi.getArticle(slug)
+        .then((article) => {
+          context.commit(mutationTypes.getArticleSuccess, article)
+          resolve(article)
+        })
+        .catch((result) => {
+          context.commit(mutationTypes.getArticleFailure, result.response.data.errors)
+          reject(result.response.data.errors)
+        })
+    })
+  }
+}
+
+export default {
+  state,
+  mutations,
+  actions
+}
