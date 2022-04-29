@@ -6,6 +6,8 @@ import Login from '@/views/Login'
 import YourFeed from '@/views/YourFeed'
 import TagFeed from '@/views/TagFeed'
 import Article from '@/views/Article'
+import CreateArticle from '@/views/CreateArticle'
+
 
 const routes = [
   {
@@ -36,7 +38,7 @@ const routes = [
   {
     path: '/articles/new',
     name: 'createArticle',
-    component: 'createArticle'
+    component: CreateArticle
   },
   {
     path: '/articles/:slug',
@@ -62,7 +64,7 @@ const routes = [
     path: '/profiles/:slug/favorites',
     name: 'userProfileFavorites',
     component: 'userProfileFavorites'
-  },
+  }
 ]
 
 const router = createRouter({
