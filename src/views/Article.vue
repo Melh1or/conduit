@@ -43,6 +43,7 @@
           <div>
             <p class='article-body'>{{ article.body }}</p>
           </div>
+          <mcv-tag-list :tags='article.tagList' />
         </div>
       </div>
     </div>
@@ -55,12 +56,14 @@ import {actionTypes as articleActionTypes} from '@/store/modules/article'
 import {gettersTypes as authGettersTypes} from '@/store/modules/auth'
 import McvErrorMessage from '@/components/ErrorMessage'
 import McvLoading from '@/components/Loading'
+import McvTagList from '@/components/TagList'
 
 export default {
   name: 'McvArticle',
   components: {
     McvErrorMessage,
-    McvLoading
+    McvLoading,
+    McvTagList
   },
   mounted() {
     this.$store.dispatch(articleActionTypes.getArticle, {slug: this.$route.params.slug})
