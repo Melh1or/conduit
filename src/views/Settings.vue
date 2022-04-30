@@ -114,7 +114,9 @@ export default {
       })
     },
     logout() {
-      console.log('world')
+      this.$store.dispatch(authActionTypes.logout).then(() => {
+        this.$router.push({name: 'globalFeed'})
+      })
     }
   }
 }
