@@ -77,7 +77,7 @@ export default {
     currentPage() {
       this.fetchFeed()
     },
-    baseUrl() {
+    apiUrl() {
       this.fetchFeed()
     }
   },

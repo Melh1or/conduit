@@ -8,6 +8,7 @@ import createArticle from '@/store/modules/createArticle'
 import editArticle from '@/store/modules/editArticle'
 import settings from '@/store/modules/settings'
 import addToFavorites from '@/store/modules/addToFavorites'
+import userProfile from '@/store/modules/userProfile'
 
  export default createStore({
   state: {},
@@ -22,6 +23,7 @@ import addToFavorites from '@/store/modules/addToFavorites'
    createArticle,
    editArticle,
    settings,
-   addToFavorites
+   addToFavorites,
+   userProfile,
   }
 })
