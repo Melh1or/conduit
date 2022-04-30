@@ -12,8 +12,13 @@ const getCurrentUser = () => {
   return axios.get('/user')
 }
 
+const updateCurrentUser = user => {
+  return axios.put('/user', {user}).then(response => response.data.user)
+}
+
 export default {
   register,
   login,
-  getCurrentUser
+  getCurrentUser,
+  updateCurrentUser
 }

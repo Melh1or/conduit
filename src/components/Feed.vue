@@ -7,7 +7,7 @@
       <div class='article-preview' v-for='(article, index) in feed.articles' :key='index'>
         <div class='article-meta'>
           <router-link :to='{name: "userProfile", params: {slug: article.author.username}}'>
-            <img :src='article.author.source' alt=''>
+            <img :src='article.author.image' alt=''>
           </router-link>
           <div class='info'>
             <router-link class='author' :to='{name: "userProfile", params: {slug: article.author.username}}'>

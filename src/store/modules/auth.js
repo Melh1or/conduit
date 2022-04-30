@@ -20,13 +20,18 @@ export const mutationTypes = {
 
   getCurrentUserStart: '[auth] getCurrentUserStart',
   getCurrentUserSuccess: '[auth] getCurrentUserSuccess',
-  getCurrentUserFailure: '[auth] getCurrentUserFailure'
+  getCurrentUserFailure: '[auth] getCurrentUserFailure',
+
+  updateCurrentUserStart: '[auth] updateCurrentUserStart',
+  updateCurrentUserSuccess: '[auth] updateCurrentUserSuccess',
+  updateCurrentUserFailure: '[auth] updateCurrentUserFailure'
 }
 
 export const actionTypes = {
   register: '[auth] register',
   login: '[auth] login',
-  getCurrentUser: '[auth] getCurrentUser'
+  getCurrentUser: '[auth] getCurrentUser',
+  updateCurrentUser: '[auth] updateCurrentUser'
 }
 
 export const gettersTypes = {
@@ -48,6 +53,7 @@ const getters = {
 }
 
 const mutations = {
+  //register
   [mutationTypes.registerStart](state) {
     state.isSubmitting = true
     state.validationErrors = null
@@ -62,6 +68,7 @@ const mutations = {
     state.validationErrors = payload
   },
 
+  // login
   [mutationTypes.loginStart](state) {
     state.isSubmitting = true
     state.validationErrors = null
@@ -76,19 +83,28 @@ const mutations = {
     state.validationErrors = payload
   },
 
+  // get current user
   [mutationTypes.getCurrentUserStart](state) {
     state.isLoading = true
   },
   [mutationTypes.getCurrentUserSuccess](state, payload) {
     state.currentUser = payload
-    state.isLoading = true
+    state.isLoading = false
     state.isLoggedIn = true
   },
   [mutationTypes.getCurrentUserFailure](state) {
     state.isLoading = false
     state.isLoggedIn = false
     state.currentUser = null
-  }
+  },
+
+  // update current user
+  // all empty mutations will be filled in settings module
+  [mutationTypes.updateCurrentUserStart]() {},
+  [mutationTypes.updateCurrentUserSuccess](state, payload) {
+    state.currentUser = payload
+  },
+  [mutationTypes.updateCurrentUserFailure]() {}
 }
 
 const actions = {
@@ -136,6 +152,20 @@ const actions = {
         })
         .catch(() => {
           context.commit(mutationTypes.getCurrentUserFailure)
+        })
+    })
+  },
+
+  [actionTypes.updateCurrentUser](context, {currentUserInput}) {
+    return new Promise((resolve) => {
+      context.commit(mutationTypes.updateCurrentUserStart)
+      authApi.updateCurrentUser(currentUserInput)
+        .then((user) => {
+          context.commit(mutationTypes.getCurrentUserSuccess, user)
+          resolve(user)
+        })
+        .catch((result) => {
+          context.commit(mutationTypes.getCurrentUserFailure, result.response.data.errors)
         })
     })
   }
